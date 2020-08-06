@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.auth.AuthActivity"
+    android:id="@+id/rootLayout">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="auth"
+            type="fmuv.client.ui.auth.binding.Auth" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/loginLogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    app:srcCompat="@drawable/img_splash_logo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:fontFamily="@font/archivo_black"
+                    android:gravity="center"
+                    android:text="FIND ME UV"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- AuthForm Form-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_horizontal"
+                        android:text="Wrong email or password."
+                        android:textColor="@color/colorDanger"
+                        android:visibility="@{ auth.errAuth ? View.VISIBLE : View.GONE }" />
+                </LinearLayout>
+
+                <!-- Login field -->
+                <LinearLayout
+                    android:id="@+id/loginField"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:onClick="onClickLogin">
+
+                    <EditText
+                        style="@style/etDefault"
+                        android:layout_marginBottom="20dp"
+                        android:background="@{ auth.errUsername ? @drawable/et_line_danger : @drawable/et_line_normal }"
+                        android:hint="Email"
+                        android:inputType="textWebEmailAddress"
+                        android:text="@={ auth.username }" />
+
+                    <EditText
+                        style="@style/etDefault"
+                        android:background="@drawable/et_line_normal"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:text="@={ auth.password }" />
+
+                    <!-- Button with loading spinner -->
+                    <RelativeLayout
+                        android:id="@+id/btnLogin"
+                        style="@style/btnDefault"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btn_primary">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center">
+
+                            <ProgressBar
+                                android:id="@+id/btnSpinnerProgressBar"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginRight="10dp"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/btnSpinnerText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Login"
+                                android:textColor="@{ auth.enabledLogin ? @color/colorWhite : @color/colorPrimaryDisabled }"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/spinnerBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:enabled="@{ auth.enabledLogin }"
+                            android:onClick="onClickLogin" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <!-- End Login field -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:onClick="onClickForgotPassword"
+                    android:text="Forgot password?"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/btnCreateAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="60dp"
+                    android:onClick="onClickCreateAccount"
+                    android:text="Create New Account"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+            <!-- End AuthForm Form-->
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

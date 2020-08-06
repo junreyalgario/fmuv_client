@@ -3,9 +3,14 @@
     <color name="colorPrimary">#053D65</color>
     <color name="colorPrimaryDark">#002642</color>
     <color name="colorAccent">#0588E6</color>
-    <color name="white">#FCFCFC</color>
+    <color name="colorWhite">#FCFCFC</color>
     <color name="textHint">#ABA7A7</color>
     <color name="colorSuccess">#008C01</color>
     <color name="opacityPrimary">#E4053D65</color>
     <color name="colorDanger">#D01605</color>
+    <color name="colorDisabled">#828080</color>
+    <color name="colorPrimaryDisabled">#0C558B</color>
+    <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorDark">#4A4A4A</color>
+    <color name="colorBlack">#000000</color>
 </resources>
