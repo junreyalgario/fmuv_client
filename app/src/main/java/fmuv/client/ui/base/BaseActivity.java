@@ -3,34 +3,46 @@ package fmuv.client.ui.base;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import fmuv.client.R;
-import fmuv.client.utils.ViewUtil;
+import fmuv.client.ui.util.ViewUtil;
 
 /**
  * @author Junrey Algario algario.devs@gmail.com 2020.8.1
  */
 
-public abstract class BaseActivity<ViewModel extends BaseViewModel> extends AppCompatActivity {
+public abstract class BaseActivity<ViewModel extends BaseViewModel> extends AppCompatActivity
+    implements HttpResponse.OnHttpErrorListener, HttpResponse.OnHttpSuccessListener {
 
     protected ViewModel viewModel;
 
-    /**
-     * Keyboard popup listener properties
-     */
+    // Keyboard popup listener properties
     private View.OnLayoutChangeListener rootLayoutChangeListener;
     private int rootHeight = 0;
     private boolean rootLayoutChangeListenerAttached = false;
     private ViewGroup rootLayout;
+
+    protected Toolbar toolbar;
+    protected ViewUtil viewUtil;
+    private HttpResponse httpResponse;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         viewModel = createViewModel();
-        baseViewModelObserver();
+        viewUtil = new ViewUtil(this);
+
+        if (viewModel != null) {
+            httpResponse = new HttpResponse();
+            httpResponse.setHttpSuccessListener(this);
+            httpResponse.setHttpErrorListener(this);
+        }
     }
 
     protected abstract ViewModel createViewModel();
@@ -40,12 +52,22 @@ public abstract class BaseActivity<ViewModel extends BaseViewModel> extends AppC
     }
 
 
-    /**
-     * Keyboard popup listener methods
-     */
-
+    // Keyboard popup listener methods
     protected void onShowKeyboard() {}
     protected void onHideKeyboard() {}
+
+    protected void attachToolbar(String title) {
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+
+        ((TextView)findViewById(R.id.toolbar_title)).setText(title);
+        ((ImageButton)findViewById(R.id.toolbar_back_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
 
     protected void attachKeyboardListeners() {
 
@@ -55,7 +77,7 @@ public abstract class BaseActivity<ViewModel extends BaseViewModel> extends AppC
                 public void onLayoutChange(View rootView, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     if (rootHeight < rootLayout.getHeight()) {
                         rootHeight = rootLayout.getHeight();
-                    }else {
+                    }else{
                         if (rootHeight > rootLayout.getHeight()) {
                             onShowKeyboard();
                         }else{
@@ -69,73 +91,87 @@ public abstract class BaseActivity<ViewModel extends BaseViewModel> extends AppC
         }
     }
 
-    /**
-     * Base view model observers for common live data
-     */
-
-    private void baseViewModelObserver(){
+    // Base view model observers for common live data
+    protected void attachResponseStatusObserver(){
 
         // Request success
         viewModel.onResponseReady().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer responseCode) {
+                httpResponse.onSuccess(responseCode);
                 doCommonOnRequestDone();
-                if (responseCode == 200) {
-                    onResponseOk();
-                }else if(responseCode == 403) {
-                    onForbidden();
-                }else if(responseCode == 404) {
-                    onNotFound();
-                }else if(responseCode == 409) {
-                    onConflict();
-                }else if(responseCode == 500) {
-                    onServerError();
-                }else if(responseCode == 503) {
-                    onServerUnavailable();
-                }
             }
         });
 
         // Request failed
-        viewModel.onRequestFailed().observe(this, new Observer<Boolean>() {
+        viewModel.onRequestFailed().observe(this, new Observer<Throwable>() {
             @Override
-            public void onChanged(Boolean failed) {
+            public void onChanged(Throwable throwable) {
+                httpResponse.onError(throwable);
                 doCommonOnRequestDone();
-                onRequestFailed();
             }
         });
     }
 
-    // Response success
-    protected void onResponseOk() {}
-
-    // The client did not have permission to access the requested resource.
-    protected void onForbidden() {}
-
-    // Conflict/Duplication of data
-    protected void onConflict() {}
-
-    // Server error
-    protected void onServerError() {
-        ViewUtil.showMessage(this, "System Message", "500 Internal Server Error Oh no! Something bad happened. Please come back later when we fixed that problem. Thanks.");
-    }
-
-    // The server was unavailable.
-    protected void onServerUnavailable() {
-        ViewUtil.showMessage(this, "System Message", "Service is not available at the moment. Try again later. Thanks.");
-    }
-
-    // Resource not found
-    protected void onNotFound() {}
-
-    // Http client request failed
-    protected void onRequestFailed() {
-        ViewUtil.showMessage(this, "System Message", "Something went wrong there. Try again.");
-    }
 
     // Common things to do for every kind of response
     protected void doCommonOnRequestDone() {}
 
+    // Http success listener
+
+    @Override
+    public void onResponseOk() {
+
+    }
+
+    @Override
+    public void onCreated() {
+
+    }
+
+    // Http error listener
+
+    @Override
+    public void onForbidden(Throwable e) {
+
+    }
+
+    @Override
+    public void onNotFound(Throwable e) {
+
+    }
+
+    @Override
+    public void onConflict(Throwable e) {
+
+    }
+
+    @Override
+    public void onServerError(Throwable e) {
+        viewUtil.showMessage(
+                "System Message",
+                "500 Internal Server Error Oh no! Something bad happened. Please come back later when we fixed that problem. Thanks.",
+                null
+        );
+    }
+
+    @Override
+    public void onServerUnavailable(Throwable e) {
+        viewUtil.showMessage(
+                "System Message",
+                "Service is not available at the moment. Try again later. Thanks.",
+                null
+        );
+    }
+
+    @Override
+    public void onFailed(Throwable e) {
+        viewUtil.showMessage(
+                "System Message",
+                "Something went wrong there. Try again.",
+                null
+        );
+    }
 
     @Override
     protected void onDestroy() {

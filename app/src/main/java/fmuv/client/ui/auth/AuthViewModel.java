@@ -1,86 +1,47 @@
 package fmuv.client.ui.auth;
 
 import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
-import fmuv.client.data.Repository;
-import fmuv.client.data.remote.dto.ApiResponse;
-import fmuv.client.data.remote.dto.Data;
+import fmuv.client.data.repository.Repository;
+import fmuv.client.domain.interactor.auth.BasicAuthUseCase;
 import fmuv.client.ui.base.BaseViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableObserver;
 
 /**
- * @author Junrey Algario algario.devs@gmail.com 2020.7.1
+ * @author Junrey Algario algario.devs@gmail.com 2020.8.8
  */
 
 public class AuthViewModel extends BaseViewModel {
 
-    private MutableLiveData<Boolean> isAuthSuccess = new MutableLiveData<>();
+    private BasicAuthUseCase basicAuth;
 
-    public MutableLiveData<Boolean> getIsAuthSuccess() {
-        return isAuthSuccess;
+    public AuthViewModel() {
+        basicAuth = new BasicAuthUseCase(Repository.auth());
     }
 
     public void authenticate(String username, String password) {
-        Repository.httpService()
-                .authentication(username, password)
-                .enqueue(new AuthCallback());
-    }
-
-    private class AuthCallback implements Callback<ApiResponse> {
-
-        @Override
-        public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
-            if (response.isSuccessful()) {
-                if (response.body() != null) {
-                    Log.d("ddd", "SETTING TOKEN: "+ response.body().getData().getUser().getToken());
-                    Repository.session()
-                            .setToken(response.body().getData().getUser().getToken())
-                            .setUserdata(response.body().getData().getUser());
-                }
+        basicAuth.login(username, password).execute(new DisposableObserver<Integer>() {
+            @Override
+            public void onNext(@NonNull  Integer integer) {
+                responseReady.setValue(integer);
             }
-            responseReady.setValue(response.code());
-        }
 
-        @Override
-        public void onFailure(Call<ApiResponse> call, Throwable t) {
-            requestFailed.setValue(true);
-        }
+            @Override
+            public void onError(@NonNull Throwable e) {
+                requestFailed.setValue(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }, null);
     }
-
 
     @Override
     protected void onCleared() {
         super.onCleared();
+        basicAuth.dispose();
     }
-
-
-    public void sample() {
-        Repository.httpService()
-                .getRestApi()
-                .index()
-                .enqueue(new Callback<Data>() {
-                    @Override
-                    public void onResponse(Call<Data> call, Response<Data> response) {
-
-                        if(response.isSuccessful()) {
-
-                            Log.d("ddd", "DATA: "+ response.body().getUser().getEmail());
-
-                        }
-
-                        responseReady.setValue(response.code());
-                    }
-
-                    @Override
-                    public void onFailure(Call<Data> call, Throwable t) {
-                        requestFailed.setValue(true);
-                    }
-                });
-
-    }
-
 }
 

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorMilkWhite"
+        android:orientation="vertical"
+        tools:context=".ui.schedule.TripScheduleActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_toolbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <!-- Origin -->
+                            <TextView
+                                style="@style/et_label"
+                                android:text="From" />
+                            <Spinner
+                                android:id="@+id/spinner_origin"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:dropDownWidth="match_parent"
+                                android:spinnerMode="dialog" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@color/colorHrLight" />
+
+                            <!-- Destination -->
+                            <TextView
+                                style="@style/et_label"
+                                android:text="To" />
+
+                            <Spinner
+                                android:id="@+id/spinner_destination"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:dropDownWidth="match_parent"
+                                android:spinnerMode="dialog" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@color/colorHrLight" />
+
+                            <!-- Date -->
+                            <TextView
+                                style="@style/et_label"
+                                android:text="Date" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="center_vertical"
+                                android:onClick="onClickDatePicker"
+                                android:textColor="@color/colorLightGray"
+                                android:textSize="16sp"
+                                android:text="Select Date" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@color/colorHrLight" />
+
+                            <!-- Number of passenger -->
+                            <TextView
+                                style="@style/et_label"
+                                android:text="No. of Passenger" />
+
+                            <Spinner
+                                android:id="@+id/spinner_no_passenger"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:dropDownWidth="80dp"
+                                android:spinnerMode="dropdown" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@color/colorHrLight" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Button with loading spinner -->
+                    <RelativeLayout
+                        android:id="@+id/btn_search_trip"
+                        style="@style/btn_default"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btn_default">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center">
+
+                            <ProgressBar
+                                android:id="@+id/btnProgressBar"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginEnd="10dp"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/btnLoadingText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Search"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/spinnerBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:enabled="true"
+                            android:onClick="onClickSearch" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

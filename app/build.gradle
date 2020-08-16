@@ -54,6 +54,13 @@ dependencies {
     // CircleImageView
     implementation 'com.alexzh:circleimageview:1.2.0'
 
+    // RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
+
+    // Room SQLite for data persistence
+//    implementation "android.arch.persistence.room:runtime:1.1.1"
+//    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
 }

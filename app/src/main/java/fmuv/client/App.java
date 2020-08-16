@@ -9,8 +9,6 @@ import android.app.Application;
 public class App extends Application {
 
     private static App appInstance;
-    public static final String BASE_URL = "http://192.168.42.96/api/";
-    public static final String NAME = "fmuv_client";
 
     @Override
     public void onCreate() {

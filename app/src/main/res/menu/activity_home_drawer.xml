@@ -3,36 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single"
-        android:id="@+id/menu_top">
+    <group android:id="@+id/menu_top">
         <item
-            android:id="@+id/nav_trip_schedule"
-            android:icon="@drawable/icon_calendar"
-            android:title="Trip Schedule"/>
-        <item
-            android:id="@+id/nav_traveling_uv"
-            android:icon="@drawable/icon_bus"
-            android:title="Traveling UV's"/>
-        <item
-            android:id="@+id/nav_reservation"
-            android:icon="@drawable/icon_reservation"
-            android:title="Reservation" />
-        <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/icon_history"
-            android:title="History" />
+            android:id="@+id/nav_account"
+            android:icon="@drawable/icon_account"
+            android:title="Account" />
         <item
             android:id="@+id/nav_about_us"
             android:icon="@drawable/icon_about_us"
             android:title="About Us" />
-    </group>
-
-    <group android:checkableBehavior="single"
-        android:id="@+id/menu_bottom">
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/icon_account"
-            android:title="Profile" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/icon_logout"

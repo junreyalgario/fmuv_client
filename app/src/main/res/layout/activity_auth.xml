@@ -9,7 +9,7 @@
         <import type="android.view.View"/>
         <variable
             name="auth"
-            type="fmuv.client.ui.auth.binding.Auth" />
+            type="fmuv.client.ui.auth.Auth" />
     </data>
 
     <ScrollView
@@ -72,7 +72,7 @@
                         android:visibility="@{ auth.errAuth ? View.VISIBLE : View.GONE }" />
                 </LinearLayout>
 
-                <!-- Login field -->
+                <!-- Credentials field -->
                 <LinearLayout
                     android:id="@+id/loginField"
                     android:layout_width="match_parent"
@@ -81,16 +81,16 @@
                     android:onClick="onClickLogin">
 
                     <EditText
-                        style="@style/etDefault"
+                        style="@style/et_primary"
                         android:layout_marginBottom="20dp"
-                        android:background="@{ auth.errUsername ? @drawable/et_line_danger : @drawable/et_line_normal }"
+                        android:background="@{ auth.errUsername ? @drawable/et_line_danger : @drawable/et_line_primary }"
                         android:hint="Email"
                         android:inputType="textWebEmailAddress"
                         android:text="@={ auth.username }" />
 
                     <EditText
-                        style="@style/etDefault"
-                        android:background="@drawable/et_line_normal"
+                        style="@style/et_primary"
+                        android:background="@drawable/et_line_primary"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:text="@={ auth.password }" />
@@ -98,7 +98,7 @@
                     <!-- Button with loading spinner -->
                     <RelativeLayout
                         android:id="@+id/btnLogin"
-                        style="@style/btnDefault"
+                        style="@style/btn_default"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="20dp"
@@ -111,19 +111,20 @@
                             android:gravity="center">
 
                             <ProgressBar
-                                android:id="@+id/btnSpinnerProgressBar"
+                                android:id="@+id/btnProgressBar"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginRight="10dp"
                                 android:visibility="gone" />
 
                             <TextView
-                                android:id="@+id/btnSpinnerText"
+                                android:id="@+id/btnLoadingText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Login"
                                 android:textColor="@{ auth.enabledLogin ? @color/colorWhite : @color/colorPrimaryDisabled }"
-                                android:textSize="14sp" />
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <Button
@@ -137,7 +138,7 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <!-- End Login field -->
+                <!-- End Credentials field -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

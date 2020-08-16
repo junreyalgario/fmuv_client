@@ -4,14 +4,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import fmuv.client.R;
 import fmuv.client.databinding.ActivityAuthBinding;
-import fmuv.client.ui.auth.binding.Auth;
 import fmuv.client.ui.base.BaseActivity;
 import fmuv.client.ui.home.HomeActivity;
-import fmuv.client.utils.ViewUtil;
+import fmuv.client.ui.util.ViewUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * @author Junrey Algario algario.devs@gmail.com 2020.7.1
@@ -32,6 +33,7 @@ public class AuthActivity extends BaseActivity<AuthViewModel> {
 
         initializeBaseActivity();
         attachKeyboardListeners();
+        attachResponseStatusObserver();
     }
 
     @Override
@@ -43,38 +45,40 @@ public class AuthActivity extends BaseActivity<AuthViewModel> {
 
     public void onClickLogin(View view) {
         viewModel.authenticate(auth.username, auth.password);
-        ViewUtil.btnSpinner(authBinding.btnLogin, "Logging in ...", View.VISIBLE);
+        viewUtil.btnLoading(authBinding.btnLogin, "Logging in ...", View.VISIBLE);
         auth.setEnabledLogin(false);
     }
 
     public void onClickForgotPassword(View view) {
-        viewModel.sample();
+
     }
 
     public void onClickCreateAccount(View view) {
-
+        startActivity(new Intent(AuthActivity.this, RegisterActivity.class));
+        overridePendingTransition(R.anim.left_leave, R.anim.left_enter);
     }
 
-    // Http response listener
+    // Interceptor response listener
+
 
     @Override
-    protected void onResponseOk() {
-        super.onResponseOk();
+    public void onResponseOk() {
         startActivity(new Intent(AuthActivity.this, HomeActivity.class));
         finish();
     }
 
     @Override
-    protected void onForbidden() {
-        super.onForbidden();
+    public void onForbidden(Throwable e) {
         auth.setErrAuth(true);
         auth.setEnabledLogin(false);
+        Snackbar.make(authBinding.loginLogo, "Incorrect username or password.", Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
     }
 
     @Override
     protected void doCommonOnRequestDone() {
         super.doCommonOnRequestDone();
-        ViewUtil.btnSpinner(authBinding.btnLogin, "Login", View.GONE);
+        viewUtil.btnLoading(authBinding.btnLogin, "Login", View.GONE);
         auth.setEnabledLogin(true);
     }
 
@@ -93,5 +97,4 @@ public class AuthActivity extends BaseActivity<AuthViewModel> {
         authBinding.loginLogo.setVisibility(View.VISIBLE);
         authBinding.btnCreateAccount.setVisibility(View.VISIBLE);
     }
-
 }

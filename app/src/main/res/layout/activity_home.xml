@@ -20,10 +20,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
+        android:scrollbars="none"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
         app:headerLayout="@layout/nav_header_home"
+        app:itemHorizontalPadding="20dp"
+        app:itemIconPadding="15dp"
+        app:itemIconTint="@color/colorDark"
+        app:itemTextColor="@color/colorDark"
         app:menu="@menu/activity_home_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

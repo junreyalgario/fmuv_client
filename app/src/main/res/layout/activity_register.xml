@@ -1,18 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.auth.RegisterActivity">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <data>
+        <variable
+            name="registrationForm"
+            type="fmuv.client.ui.auth.RegistrationForm" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_toolbar" />
+
+        <ScrollView
+            android:id="@+id/rootLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp">
 
+
+                    <TextView
+                        android:id="@+id/txtHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:drawablePadding="5dp"
+                        android:gravity="center|start"
+                        android:text="@string/personal_information"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/parentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/first_name" />
+
+                        <EditText
+                            android:id="@+id/f_name"
+                            style="@style/et_normal"
+                            android:hint="@string/enter_first_name"
+                            android:text="@={ registrationForm.fname }" />
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/last_name" />
+
+                        <EditText
+                            android:id="@+id/l_name"
+                            style="@style/et_normal"
+                            android:hint="@string/enter_last_name"
+                            android:text="@={ registrationForm.lname }" />
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/gender" />
+
+                        <Spinner
+                            android:id="@+id/gender_spinner"
+                            style="@style/spinner_dropdown"
+                            android:layout_height="35dp"
+                            android:dropDownWidth="150dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorLightGray"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/contact_number" />
+
+                        <EditText
+                            android:id="@+id/contact"
+                            style="@style/et_normal"
+                            android:hint="@string/enter_contact_number"
+                            android:text="@={ registrationForm.contact }" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:drawablePadding="5dp"
+                            android:gravity="center|start"
+                            android:text="@string/account_information"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/email" />
+
+                        <EditText
+                            android:id="@+id/email"
+                            style="@style/et_normal"
+                            android:hint="@string/enter_email"
+                            android:inputType="text|textEmailSubject"
+                            android:text="@={ registrationForm.email }" />
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/password" />
+
+                        <EditText
+                            android:id="@+id/password"
+                            style="@style/et_normal"
+                            android:hint="@string/enter_password"
+                            android:inputType="textPassword"
+                            android:text="@={ registrationForm.password }" />
+
+                        <TextView
+                            style="@style/et_label"
+                            android:text="@string/confirm_password" />
+
+                        <EditText
+                            android:id="@+id/confirm_password"
+                            style="@style/et_normal"
+                            android:hint="@string/confirm_pass"
+                            android:inputType="textPassword"
+                            android:text="@={ registrationForm.cpassword }" />
+
+                        <!-- Button with loading spinner -->
+                        <RelativeLayout
+                            android:id="@+id/btn_register"
+                            style="@style/btn_default"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/btn_primary">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center">
+
+                                <ProgressBar
+                                    android:id="@+id/btnProgressBar"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/btnLoadingText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Register"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/spinnerBtn"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorTransparent"
+                                android:enabled="true"
+                                android:onClick="onClickRegister" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
 </layout>

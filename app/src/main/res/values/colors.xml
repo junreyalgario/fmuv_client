@@ -5,12 +5,20 @@
     <color name="colorAccent">#0588E6</color>
     <color name="colorWhite">#FCFCFC</color>
     <color name="textHint">#ABA7A7</color>
-    <color name="colorSuccess">#008C01</color>
-    <color name="opacityPrimary">#E4053D65</color>
+    <color name="colorSuccess">#0B670C</color>
+    <color name="opacityPrimary">#C0002642</color>
     <color name="colorDanger">#D01605</color>
     <color name="colorDisabled">#828080</color>
     <color name="colorPrimaryDisabled">#0C558B</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorDark">#4A4A4A</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorLightGray">#A7A6A6</color>
+    <color name="colorMilkWhite">#EEEDED</color>
+    <color name="opacityDark">#76000000</color>
+    <color name="colorOpacityBlackLight">#A3000000</color>
+    <color name="opacityLight">#021C30</color>
+    <color name="colorGreen">#0C3E04</color>
+    <color name="colorHrLight">#F0EEEE</color>
+    <color name="colorDefault">#B8B6B6</color>
 </resources>
